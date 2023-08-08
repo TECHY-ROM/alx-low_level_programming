@@ -14,9 +14,15 @@ char *create_array(unsigned int size, char c)
 	char *ptArray;
 	unsigned int count;
 
+	if (size == 0)
+		return (NULL);
+
 	/* allocating space for arraay */
 
 	ptArray = malloc(size * sizeof(char));
+
+	if (ptArray == NULL)
+		return (NULL);
 
 	/* put a char c in each of the memory locaton*/
 
