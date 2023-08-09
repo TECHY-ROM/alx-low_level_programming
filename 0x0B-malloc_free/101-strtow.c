@@ -38,6 +38,7 @@ char **strtow(char *str)
 	str_len += flag == 1 ? 1 : 0;
 	if (str_len == 0)
 		return (NULL);
+
 	ptwords = (char **)malloc(sizeof(char *) * (str_len + 1));
 	if (ptwords == NULL)
 		return (NULL);
@@ -52,7 +53,6 @@ char **strtow(char *str)
  * @ptwords: the string array
  * @str: the string
  */
-
 void util(char **ptwords, char *str)
 {
 	int i;
@@ -74,6 +74,7 @@ void util(char **ptwords, char *str)
 			j++;
 			flag = 0;
 		}
+
 		i++;
 	}
 
@@ -89,14 +90,13 @@ void util(char **ptwords, char *str)
  * @end: the stopping index of the word
  * @index: the index of the array to insert the word
  */
-
 void create_word(char **ptwords, char *str, int start, int end, int index)
 {
 	int i;
 	int j;
 
 	i = end - start;
-	ptwords[index] = (char *)malloc(sizeof(char) * (i - 1));
+	ptwords[index] = (char *)malloc(sizeof(char) * (i + 1));
 
 	for (j = 0; start < end; start++, j++)
 		ptwords[index][j] = str[start];
