@@ -15,9 +15,13 @@ int _putchar(char c);
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
+#include <ctype.h>
 
-void errors(void);
+int is_positive_integer(const char *str);
+
+void multiply_strings(const char *str1, const char *str2, char *result, int len1, int len2);
+
+int main(int argc, char *argv[]);
 
 int _strlen(char *s);
 
