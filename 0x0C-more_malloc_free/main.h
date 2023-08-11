@@ -27,4 +27,8 @@ int _strlen(char *s);
 
 int is_digit(char *s);
 
+void init(char *str, int l);
+
+void _print(char *str, int l);
+
 #endif
