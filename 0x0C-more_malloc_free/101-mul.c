@@ -1,4 +1,8 @@
 #include "main.h"
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <ctype.h>
 
 /**
  * is_positive_integer - Checks if a string is a positive integer
@@ -32,6 +36,7 @@ void multiply_strings(const char *str1, const char *str2,
 {
 	int result_len = len1 + len2;
 	int i, j, carry, product;
+	int first_non_zero;
 
 	for (i = 0; i < result_len; i++)
 	result[i] = '0';
@@ -40,15 +45,26 @@ void multiply_strings(const char *str1, const char *str2,
 	for (i = len1 - 1; i >= 0; i--)
 	{
 		carry = 0;
-	for (j = len2 - 1; j >= 0; j--)
-	{
-		product = (str1[i] - '0') * (str2[j] - '0')
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			product = (str1[i] - '0') * (str2[j] - '0')
 			+ (result[i + j + 1] - '0') + carry;
-		carry = product / 10;
-		result[i + j + 1] = (product % 10) + '0';
+			carry = product / 10;
+			result[i + j + 1] = (product % 10) + '0';
+		}
+		result[i] += carry;
 	}
-	result[i] += carry;
-	}
+
+	first_non_zero = 0;
+	while (result[first_non_zero] == '0')
+		first_non_zero++;
+
+	if (result[first_non_zero] == '\0')
+		first_non_zero--;
+
+	for (i = 0; result[first_non_zero]; i++, first_non_zero++)
+		result[i] = result[first_non_zero];
+	result[i] = '\0';
 }
 
 /**
@@ -67,9 +83,9 @@ int main(int argc, char *argv[])
 	if (argc != 3 || !is_positive_integer(argv[1])
 		|| !is_positive_integer(argv[2]))
 	{
-	for (msg = "Error\n"; *msg; msg++)
+		for (msg = "Error\n"; *msg; msg++)
 		_putchar(*msg);
-	return (98);
+		return (98);
 	}
 
 	num1 = argv[1];
@@ -86,15 +102,15 @@ int main(int argc, char *argv[])
 	result = malloc(len1 + len2 + 1);
 	if (result == NULL)
 	{
-	for (msg = "Error\n"; *msg; msg++)
+		for (msg = "Error\n"; *msg; msg++)
 		_putchar(*msg);
-	return (98);
+		return (98);
 	}
 
 	multiply_strings(num1, num2, result, len1, len2);
 
 	for (i = 0; result[i]; i++)
-	_putchar(result[i]);
+		_putchar(result[i]);
 	_putchar('\n');
 
 	free(result);
