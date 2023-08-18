@@ -6,42 +6,47 @@
  * Variadic function that supports 'c' (char), 'i' (integer),
  * 'f' (float), and 's' (string) specifiers.
  */
+
 void print_all(const char * const format, ...)
 {
-	va_list args;
-	unsigned int i = 0;
-	char *separator = "";
-	char *s;
+	va_list list;
+	unsigned int a = 0;
+	char *str, *sep = "";
 
-	va_start(args, format);
+	va_start(list, format);
 
-	while (format && format[i])
+	if (format)
 	{
-		if (format[i + 1])
-			separator = ", ";
-
-		switch (format[i])
+		while (format[a])
 		{
-			case 'c':
-				printf("%c%s", va_arg(args, int), separator);
-				break;
-			case 'i':
-				printf("%d%s", va_arg(args, int), separator);
-				break;
-			case 'f':
-				printf("%f%s", (float) va_arg(args, double), separator);
-				break;
-			case 's':
-				s = va_arg(args, char *);
-				if (!s)
-					s = "(nil)";
-				printf("%s%s", s, separator);
-				break;
+			switch (format[a])
+			{
+				case 'c':
+					printf("%s%c", sep, va_arg(list, int));
+					break;
+				case 'i':
+					printf("%s%d", sep, va_arg(list, int));
+					break;
+				case 'f':
+					printf("%s%f", sep, va_arg(list, double));
+					break;
+				case 's':
+					str = va_arg(list, char *);
+
+					if (!str)
+						str = "(nil)";
+					printf("%s%s", sep, str);
+					break;
+				default:
+					a++;
+					continue;
+			}
+			sep = ", ";
+			a++;
 		}
-		i++;
 	}
 
 	printf("\n");
 
-	va_end(args);
+	va_end(list);
 }
